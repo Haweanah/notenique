@@ -1,5 +1,5 @@
 from flask import render_template, url_for, flash, redirect
-from notenique import app
+from notenique import app, db, bcrypt
 from notenique.forms import RegistrationForm, LoginForm
 from notenique.models import User, Note
 
@@ -37,8 +37,12 @@ def dashboard():
 def register():
   form = RegistrationForm()
   if form.validate_on_submit():
-    flash(f'Account successfully created for {form.username.data}!', 'success')
-    return redirect(url_for('home'))
+    hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+    user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+    db.session.add(user)
+    db.session.commit()
+    flash(f'Account successfully created!, You can now log in to create notes', 'success')
+    return redirect(url_for('login'))
   return render_template('register.html', title='Register', form=form)
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -51,3 +55,4 @@ def login():
     else:
       flash('Failed to Login. Please check your email and password', 'danger')
   return render_template('login.html', title='Register', form=form)
+
