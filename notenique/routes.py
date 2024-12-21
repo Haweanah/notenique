@@ -1,8 +1,8 @@
-from flask import render_template, url_for, flash, redirect
+from flask import render_template, url_for, flash, redirect, request
 from notenique import app, db, bcrypt
 from notenique.forms import RegistrationForm, LoginForm
 from notenique.models import User, Note
-from flask_login import login_user, current_user, logout_user
+from flask_login import login_user, current_user, logout_user, login_required
 
 
 notes = [
@@ -30,10 +30,6 @@ def home():
 def about():
   return render_template('about.html', title='About')
 
-@app.route("/dashboard")
-def dashboard():
-    return render_template('dashboard.html', notes=notes)
-
 @app.route("/register", methods=['GET', 'POST'])
 def register():
   if current_user.is_authenticated:
@@ -57,7 +53,8 @@ def login():
     user = User.query.filter_by(email=form.email.data).first()
     if user and bcrypt.check_password_hash(user.password, form.password.data):
       login_user(user, remember=form.remember.data)
-      return redirect(url_for('dashboard'))
+      next_page = request.args.get('next')
+      return redirect(next_page) if next_page else redirect(url_for('home'))
     else:
       flash('Login Unsuccessful. Please check your email and password', 'danger')
   return render_template('login.html', title='Login', form=form)
@@ -67,6 +64,7 @@ def logout():
   logout_user()
   return redirect(url_for('home'))
 
-@app.route("/account")
-def account():
-  return render_template('accont.html', title='Account')
+@app.route("/dashboard")
+@login_required
+def dashboard():
+  return render_template('dashboard.html', title='Dashboard')
