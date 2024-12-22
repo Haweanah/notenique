@@ -18,41 +18,44 @@
 </head>
 <body>
     <header class="site-header">
-      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-          <a class="navbar-brand"  href="/">Notenique</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarToggle">
-            <ul class="navbar-nav mr-auto">
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand mr-4"  href="/">Notenique</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="#navbarToggle">
+          <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                  <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
+              </li>
+              <li class="nav-item">
+              <li class="nav-item">
+                  <a class="nav-item nav-link" href="{{ url_for('about') }}">About</a>
+              </li>
+          </ul>
+          <!-- Navbar Right Side -->
+          <ul class="navbar-nav">
+              {% if current_user.is_authenticated %}
+              <li class="nav-item active">
+                <a class="nav-item nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+              </li>
                 <li class="nav-item active">
-                    <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
+                <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+                </li>
+              {% else %}
+                <li class="nav-item active">
+                  <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
                 </li>
                 <li class="nav-item">
-                <li class="nav-item">
-                    <a class="nav-item nav-link" href="{{ url_for('about') }}">About</a>
+                  <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
                 </li>
+            {% endif %}
             </ul>
-            <!-- Navbar Right Side -->
-            <ul class="navbar-nav">
-                {% if current_user.is_authenticated %}
-                <li class="nav-item active">
-                  <a class="nav-item nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
-                </li>
-                  <li class="nav-item active">
-                  <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
-                  </li>
-                {% else %}
-                  <li class="nav-item active">
-                    <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
-                  </li>
-              {% endif %}
-              </ul>
-            </div>
-          </nav>
+          </div>
+       
+      </div>   
+      </nav>
     </header>
     <main role="main" class="container">
       <div class="row">
