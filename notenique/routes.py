@@ -80,9 +80,9 @@ def save_picture(form_picture):
 
   return picture_fn
 
-@app.route("/dashboard", methods=['GET', 'POST'])
+@app.route("/account", methods=['GET', 'POST'])
 @login_required
-def dashboard():
+def account():
   form = UpdateAccountForm()
   if form.validate_on_submit():
     if form.picture.data:
@@ -92,10 +92,10 @@ def dashboard():
     current_user.email = form.email.data
     db.session.commit()
     flash('Your profile has been successfully updated!', 'success')
-    return redirect(url_for('dashboard'))
+    return redirect(url_for('account'))
   elif request.method == 'GET':
     form.username.data = current_user.username
     form.email.data = current_user.email
   image_file = url_for('static', filename = 'photo/' + (current_user.image_file or 'default.jpg'))
   print(f"Generated image file path: {image_file}")
-  return render_template('dashboard.html', title='Dashboard', image_file = image_file, form=form)
+  return render_template('account.html', title='Account', image_file = image_file, form=form)
