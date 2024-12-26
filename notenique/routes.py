@@ -67,4 +67,6 @@ def logout():
 @app.route("/dashboard")
 @login_required
 def dashboard():
-  return render_template('dashboard.html', title='Dashboard')
+  image_file = url_for('static', filename = 'photo/' + (current_user.image_file or 'default.jpg'))
+  print(f"Generated image file path: {image_file}")
+  return render_template('dashboard.html', title='Dashboard', image_file = image_file)

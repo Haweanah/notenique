@@ -7,7 +7,7 @@
 body {
     background: #fafafa;
     color: #333333;
-    margin-top: 1rem;
+    margin-top: 6rem;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -73,14 +73,22 @@ body {
     height: 25px;
     vertical-align: middle;
   }
-  
-  .account-img {
-    height: 125px;
-    width: 125px;
-    margin-right: 20px;
-    margin-bottom: 16px;
+
+  .media {
+    display: flex;
+    align-items: center; /* Align items vertically in the center */
   }
   
-  .account-heading {
-    font-size: 2.5rem;
+  
+  .dashboard-img {
+    border-radius: 50%; /* Make the image circular */
+    width: 100px; /* Set image width */
+    height: 100px; /* Set image height */
+    margin-right: 20px; /* Add spacing between image and text */
   }
+  
+  .media-body {
+    display: block;
+    margin-left: 15px;
+  }
+  
