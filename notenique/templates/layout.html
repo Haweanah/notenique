@@ -23,7 +23,7 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
               <li class="nav-item active">
                   <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
@@ -36,7 +36,11 @@
           <ul class="navbar-nav">
               {% if current_user.is_authenticated %}
               <li class="nav-item active">
-                <a class="nav-item nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+                <a class="nav-item nav-link" href="{{ url_for('new_note') }}">Create Notes</a>
+              </li>
+                <li class="nav-item active">
+              <li class="nav-item active">
+                <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
               </li>
                 <li class="nav-item active">
                 <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>

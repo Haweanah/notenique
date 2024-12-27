@@ -3,30 +3,16 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
 from notenique import app, db, bcrypt
-from notenique.forms import RegistrationForm, LoginForm, UpdateAccountForm
+from notenique.forms import RegistrationForm, LoginForm, UpdateAccountForm, NoteForm
 from notenique.models import User, Note
 from flask_login import login_user, current_user, logout_user, login_required
 
 
-notes = [
-  {
-    'author': 'Nana Hauwa',
-    'title': 'My First Blog Post',
-    'content': 'This is my first ever post on Notenique app and I hope to make the best of it',
-    'date_posted': 'Jan 9, 1999'
-  },
-
-  {
-    'author': 'Fola Adeola',
-    'title': 'My Second Blog Post',
-    'content': 'This is my second post on Notenique app and I hope you find it interesting',
-    'date_posted': 'Jan 28, 1999'
-  }
-]
 
 @app.route("/")
 @app.route("/home")
 def home():
+  notes = Note.query.all()
   return render_template('home.html', notes=notes)
 
 @app.route("/about")
@@ -99,3 +85,21 @@ def account():
   image_file = url_for('static', filename = 'photo/' + (current_user.image_file or 'default.jpg'))
   print(f"Generated image file path: {image_file}")
   return render_template('account.html', title='Account', image_file = image_file, form=form)
+
+@app.route("/post/new", methods=['GET', 'POST'])
+@login_required
+def new_note():
+  form = NoteForm()
+  if form.validate_on_submit():
+    note = Note(title=form.title.data, content=form.content.data, author=current_user)
+    db.session.add(note)
+    db.session.commit()
+
+    flash('Your note has been created!', 'success')
+    return redirect(url_for('home'))
+  return render_template('create_note.html', title='New Note', form=form)
+
+@app.route("/note/<int:note_id>")
+def note(note_id):
+  note = Note.query.get_or_404(note_id)
+  return render_template('note.html', title=note.title, note=note)

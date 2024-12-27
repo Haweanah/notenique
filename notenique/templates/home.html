@@ -2,10 +2,11 @@
 {% block content %}
     {% for note in notes %}
         <article class="media content-section">
+          <img class="rounded-circle article-img" src="{{ url_for('static', filename='photo/' + note.author.image_file) }}" alt="profile photo" >
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="#">{{ note.author }}</a>
-              <small class="text-muted">{{ note.date_posted }}</small>
+              <a class="mr-2" href="#">{{ note.author.username }}</a>
+              <small class="text-muted">{{ note.date_posted.strftime('%Y-%m-%d') }}</small>
             </div>
             <h2><a class="article-title" href="#">{{ note.title }}</a></h2>
             <p class="article-content">{{ note.content }}</p>
