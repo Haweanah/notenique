@@ -1,7 +1,7 @@
 import os
 import secrets
 from PIL import Image
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, abort
 from notenique import app, db, bcrypt
 from notenique.forms import RegistrationForm, LoginForm, UpdateAccountForm, NoteForm
 from notenique.models import User, Note
@@ -97,9 +97,20 @@ def new_note():
 
     flash('Your note has been created!', 'success')
     return redirect(url_for('home'))
-  return render_template('create_note.html', title='New Note', form=form)
+  return render_template('create_note.html', title='New Note', form=form, legend='New Note')
 
 @app.route("/note/<int:note_id>")
 def note(note_id):
   note = Note.query.get_or_404(note_id)
   return render_template('note.html', title=note.title, note=note)
+
+@app.route("/note/<int:note_id>/update")
+@login_required
+def update_note(note_id):
+  note = Note.query.get_or_404(note_id)
+  if note.author != current_user:
+    abort(403)
+  form = NoteForm()
+  form.title.data = note.title
+  form.content.data = note.content
+  return render_template('create_note.html', title='Update Note', form=form, legend='Update Note')
