@@ -56,4 +56,4 @@ class UpdateAccountForm(FlaskForm):
 class NoteForm(FlaskForm):
    title = StringField('Title', validators=[DataRequired()])
    content = TextAreaField('Content', validators=[DataRequired()])
-   submit = SubmitField('Post')
+   submit = SubmitField('Save')
