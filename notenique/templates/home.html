@@ -1,11 +1,11 @@
 {% extends "layout.html" %}
 {% block content %}
     {% for note in notes %}
-        <article class="media content-section">
+        <article class="d-flex flex-column content-section">
           <img class="rounded-circle article-img" src="{{ url_for('static', filename='photo/' + note.author.image_file) }}" alt="profile photo" >
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="#">{{ note.author.username }}</a>
+              <a class="me-2" href="#">{{ note.author.username }}</a>
               <small class="text-muted">{{ note.date_posted.strftime('%Y-%m-%d') }}</small>
             </div>
             <h2><a class="article-title" href="{{ url_for('note', note_id=note.id) }}">{{ note.title }}</a></h2>
