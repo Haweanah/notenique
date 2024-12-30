@@ -54,6 +54,10 @@ class UpdateAccountForm(FlaskForm):
              raise ValidationError('Email already taken')
 
 class NoteForm(FlaskForm):
-   title = StringField('Title', validators=[DataRequired()])
-   content = TextAreaField('Content', validators=[DataRequired()])
-   submit = SubmitField('Save')
+    title = StringField('Title', validators=[DataRequired()])
+    content = TextAreaField('Content', validators=[DataRequired()])  # This will be populated by Quill's content
+    submit = SubmitField('Save')
+    
+    def validate_content(self, content):
+        # You can add any validation for content if required
+        pass

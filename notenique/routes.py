@@ -89,15 +89,21 @@ def account():
 @app.route("/post/new", methods=['GET', 'POST'])
 @login_required
 def new_note():
-  form = NoteForm()
-  if form.validate_on_submit():
-    note = Note(title=form.title.data, content=form.content.data, author=current_user)
-    db.session.add(note)
-    db.session.commit()
+    form = NoteForm()
+    
+    if form.validate_on_submit():
+        # Capture the HTML content from Quill editor
+        content = form.content.data  # This is the content passed from the form (which will be Quill content)
 
-    flash('Your note has been created!', 'success')
-    return redirect(url_for('home'))
-  return render_template('create_note.html', title='New Note', form=form, legend='New Note')
+        # Save the new note with the content (HTML)
+        note = Note(title=form.title.data, content=content, author=current_user)
+        db.session.add(note)
+        db.session.commit()
+
+        flash('Your note has been created!', 'success')
+        return redirect(url_for('home'))
+    
+    return render_template('create_note.html', title='New Note', form=form, legend='New Note')
 
 @app.route("/note/<int:note_id>")
 def note(note_id):
