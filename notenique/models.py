@@ -1,5 +1,6 @@
 from datetime import datetime, timezone
-from notenique import db, login_manager
+from itsdangerous import URLSafeTimedSerializer
+from notenique import db, login_manager, app
 from flask_login import UserMixin
 
 
@@ -14,6 +15,20 @@ class User(db.Model, UserMixin):
   image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
   password = db.Column(db.String(70), nullable=False)
   notes = db.relationship('Note', backref='author', lazy=True)
+
+  def get_reset_token(self, expires_sec=1800):
+        s = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+        return s.dumps({'user_id': self.id}, salt='reset-password')
+
+  @staticmethod
+  def verify_reset_token(token):
+        s = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+        try:
+            user_id = s.loads(token, salt='reset-password', max_age=1800)['user_id']
+        except Exception as e:
+            print(f"Token verification error: {e}")
+            return None
+        return User.query.get(user_id)   
 
   def __repr__(self):
     return f"User('{self.username}', '{self.email}', '{self.image_file}')"

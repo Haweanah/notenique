@@ -2,22 +2,23 @@ import os
 import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
-from notenique import app, db, bcrypt
-from notenique.forms import RegistrationForm, LoginForm, UpdateAccountForm, NoteForm
+from notenique import app, db, bcrypt, mail
+from notenique.forms import RegistrationForm, LoginForm, UpdateAccountForm, NoteForm, RequestResetForm, ResetPasswordForm
 from notenique.models import User, Note
 from flask_login import login_user, current_user, logout_user, login_required
-
+from flask_mail import Message
 
 
 @app.route("/")
 @app.route('/home', methods=['GET'])
 def home():
-    page = request.args.get('page', 1, type=int)
+    page = request.args.get('page', 1, type=int)  # Get the current page number from the request
+    per_page = 5
     if current_user.is_authenticated:
-        notes = Note.query.filter_by(author=current_user).paginate(page=page, per_page=5)
+        notes = Note.query.filter_by(author=current_user).paginate(page=page, per_page=per_page, error_out=False)
 
     else:
-        notes = Note.query.paginate(page, per_page=5)
+        notes = Note.query.paginate(page=page, per_page=5)
     return render_template('home.html', notes=notes)
 
 @app.route("/about")
@@ -143,4 +144,58 @@ def delete_note(note_id):
   db.session.commit()
   flash('Your note has been deleted', 'success')
   return redirect(url_for('home'))
+
+def send_reset_email(user):
+  token = user.get_reset_token()
+  msg = Message('Password Reset Request', sender='noreply@notenique.com', recipients=[user.email])
+  msg.body = '''To reset your password, visit the following link:
+{url_for('reset_token', token=token, _external=True)}
+
+If you did not make this request, please ignore this email
+'''
+
+  mail.send(msg)
+
+@app.route("/send_email")
+def send_email():
+    msg = Message("Hello", recipients=["aakanke.opo@gmail.com"])  
+    msg.body = "This is a test email"
+    mail.send(msg)
+    return "Test Email sent!"
+
+
+
+@app.route("/reset_password", methods=['GET', 'POST'])
+def reset_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     
+    form = RequestResetForm()
+    
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user:
+            send_reset_email(user)
+            flash('Instructions on how to reset your password have been sent to your email.', 'info')
+        else:
+            flash('No account found with that email.', 'warning')
+        return redirect(url_for('login'))
+    
+    return render_template('reset_request.html', title='Reset Password', form=form)
+
+@app.route("/reset_password/<token>", methods=['GET', 'POST'])
+def reset_token(token):
+  if current_user.is_authenticated:
+    return redirect(url_for('home'))
+  user = User.verify_reset_token(token)
+  if user is None:
+    flash('Invalid or expired token', 'warning')
+    return redirect(url_for('reset_request'))
+  form = ResetPasswordForm()
+  if form.validate_on_submit():
+    hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+    user.password = hashed_password
+    db.session.commit()
+    flash(f'Password successfully updated!, You can now log in to create your notes', 'success')
+    return redirect(url_for('login'))
+  return render_template('reset_token.html', title= 'Reset Password', form=form)

@@ -61,3 +61,20 @@ class NoteForm(FlaskForm):
     def validate_content(self, content):
         # You can add any validation for content if required
         pass
+
+class RequestResetForm(FlaskForm):
+    email = StringField('Email',
+                        validators=[DataRequired(), Email()])
+    submit = SubmitField('Request Reset Password')
+
+    def validate_email(self, email):
+
+        user = User.query.filter_by(email=email.data).first()
+        if user is None:
+            raise ValidationError('You do not have an account with this email')
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=6, max=15)])
+    confirm_password = PasswordField('Confirm Password',
+                                     validators=[DataRequired(), Length(min=6, max=15), EqualTo('password')])
+    submit = SubmitField('Reset Password')
