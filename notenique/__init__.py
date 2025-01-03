@@ -18,7 +18,7 @@ app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = 'yenyenyen@gmail.com'
-app.config['MAIL_PASSWORD'] = 'iamacuteprincess'
+app.config['MAIL_PASSWORD'] = 'hellothere'
 app.config['MAIL_DEFAULT_SENDER'] = 'noreply@notenique.com'
 mail = Mail(app)
 from notenique import routes
