@@ -10,11 +10,15 @@ from flask_login import login_user, current_user, logout_user, login_required
 
 
 @app.route("/")
-@app.route("/home")
+@app.route('/home', methods=['GET'])
 def home():
-  page = request.args.get('page', 1, type=int)
-  notes = Note.query.paginate(page=page, per_page=2)
-  return render_template('home.html', notes=notes)
+    page = request.args.get('page', 1, type=int)
+    if current_user.is_authenticated:
+        notes = Note.query.filter_by(author=current_user).paginate(page=page, per_page=5)
+
+    else:
+        notes = Note.query.paginate(page, per_page=5)
+    return render_template('home.html', notes=notes)
 
 @app.route("/about")
 def about():
