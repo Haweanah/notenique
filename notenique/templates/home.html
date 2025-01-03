@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    {% for note in notes %}
+    {% for note in notes.items %}
         <article class="d-flex content-section">
             <img class="rounded-circle article-img" src="{{ url_for('static', filename='photo/' + note.author.image_file) }}" alt="profile photo" >
             <div class="media-body">
@@ -15,4 +15,13 @@
             </div>
         </article>
     {% endfor %}
+    {% for page_num in notes.iter_pages() %}
+        {% if page_num %}
+            <a class="btn btn-outline-warning mb-4" href="{{ url_for('home', page=page_num) }}">{{ page_num }}</a>
+        {% else %}
+            ...
+        {% endif %}
+    {% endfor %}
+
+
 {% endblock content %}
