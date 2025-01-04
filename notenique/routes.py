@@ -2,12 +2,10 @@ import os
 import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
-from notenique import app, db, bcrypt, mail
-from notenique.forms import RegistrationForm, LoginForm, UpdateAccountForm, NoteForm, RequestResetForm, ResetPasswordForm
+from notenique import app, db, bcrypt
+from notenique.forms import RegistrationForm, LoginForm, UpdateAccountForm, NoteForm
 from notenique.models import User, Note
 from flask_login import login_user, current_user, logout_user, login_required
-from flask_mail import Message
-
 
 @app.route("/")
 @app.route('/home', methods=['GET'])
@@ -145,46 +143,6 @@ def delete_note(note_id):
   flash('Your note has been deleted', 'success')
   return redirect(url_for('home'))
 
-def send_reset_email(user):
-  token = user.get_reset_token()
-  msg = Message('Password Reset Request', sender='noreply@notenique.com', recipients=[user.email])
-  msg.body = '''To reset your password, visit the following link:
-{url_for('reset_token', token=token, _external=True)}
-
-If you did not make this request, please ignore this email
-'''
-
-  mail.send(msg)
-
-@app.route("/send_email")
-def send_email():
-    msg = Message("Hello", recipients=["aakanke.opo@gmail.com"])  
-    msg.body = "This is a test email"
-    mail.send(msg)
-    return "Test Email sent!"
-
-
-
-@app.route("/reset_password", methods=['GET', 'POST'])
-def reset_request():
-    if current_user.is_authenticated:
-        return redirect(url_for('home'))
-    
-    form = RequestResetForm()
-    
-    if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        if user:
-            send_reset_email(user)
-            flash('Instructions on how to reset your password have been sent to your email.', 'info')
-        else:
-            flash('No account found with that email.', 'warning')
-        return redirect(url_for('login'))
-    
-    return render_template('reset_request.html', title='Reset Password', form=form)
-
-@app.route("/reset_password/<token>", methods=['GET', 'POST'])
-def reset_token(token):
   if current_user.is_authenticated:
     return redirect(url_for('home'))
   user = User.verify_reset_token(token)
