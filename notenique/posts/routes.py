@@ -1,13 +1,8 @@
-from flask import render_template, url_for, flash, redirect, request, abort, Blueprint
-from flask_login import current_user, login_required
-from notenique import db
-from notenique.models import Note
-from notenique.notes.forms import NoteForm
+from flask import Blueprint
 
+posts = Blueprint('posts', __name__)
 
-notes = Blueprint('notes', __name__)
-
-@notes.route("/post/new", methods=['GET', 'POST'])
+@posts.route("/post/new", methods=['GET', 'POST'])
 @login_required
 def new_note():
     form = NoteForm()
@@ -25,12 +20,12 @@ def new_note():
     
     return render_template('create_note.html', title='New Note', form=form, legend='New Note')
 
-@notes.route("/note/<int:note_id>")
+@posts.route("/note/<int:note_id>")
 def note(note_id):
   note = Note.query.get_or_404(note_id)
   return render_template('note.html', title=note.title, note=note)
 
-@notes.route("/note/<int:note_id>/edit", methods=['GET', 'POST'])
+@posts.route("/note/<int:note_id>/edit", methods=['GET', 'POST'])
 @login_required
 def edit_note(note_id):
   note = Note.query.get_or_404(note_id)
@@ -48,7 +43,7 @@ def edit_note(note_id):
     form.content.data = note.content
   return render_template('create_note.html', title='Edit Note', form=form, legend='Edit Note')
 
-@notes.route("/note/<int:note_id>/delete", methods=['POST'])
+@posts.route("/note/<int:note_id>/delete", methods=['POST'])
 @login_required
 def delete_note(note_id):
   note = Note.query.get_or_404(note_id)

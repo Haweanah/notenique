@@ -1,9 +1,4 @@
-from flask import render_template, url_for, flash, redirect, request, Blueprint
-from flask_login import login_user, current_user, logout_user, login_required
-from notenique import db, bcrypt
-from notenique.models import User, Note
-from notenique.users.forms import RegistrationForm, LoginForm, UpdateAccountForm
-from notenique.users.utils import save_picture
+from flask import Blueprint
 
 users = Blueprint('users', __name__)
 
