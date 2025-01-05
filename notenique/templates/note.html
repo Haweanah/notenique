@@ -9,7 +9,7 @@
                 <small class="text-muted">{{ note.date_posted.strftime('%Y-%m-%d') }}</small>
                 {% if note.author == current_user %}
                     <div>
-                        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('edit_note', note_id=note.id) }}">Edit</a>
+                        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('notes.edit_note', note_id=note.id) }}">Edit</a>
                         <button type="button" class="btn btn-danger btn-sm m-1" data-bs-toggle="modal" data-bs-target="#deleteModal">
                             <i class="fas fa-trash-alt"></i> Delete
                         </button>
@@ -35,7 +35,7 @@
                         <i class="fas fa-times-circle"></i> Close
                     </button>
                     <!-- Delete button with an updated design -->
-                    <form action="{{ url_for('delete_note', note_id=note.id) }}" method="POST">
+                    <form action="{{ url_for('notes.delete_note', note_id=note.id) }}" method="POST">
                         <input class="btn btn-danger" type="submit" value="Delete">
                     </form>
                 </div>

@@ -14,4 +14,10 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
 
-from notenique import routes
+from notenique.users.routes import users
+from notenique.notes.routes import notes
+from notenique.main.routes import main
+
+app.register_blueprint(users)
+app.register_blueprint(notes)
+app.register_blueprint(main)

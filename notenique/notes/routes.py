@@ -13,7 +13,6 @@ def new_note():
     form = NoteForm()
     
     if form.validate_on_submit():
-        # Capture the HTML content from Quill editor
         content = form.content.data  # This is the content passed from the form (which will be Quill content)
 
         # Save the new note with the content (HTML)
@@ -22,7 +21,7 @@ def new_note():
         db.session.commit()
 
         flash('Your note has been created!', 'success')
-        return redirect(url_for('home'))
+        return redirect(url_for('main.home'))
     
     return render_template('create_note.html', title='New Note', form=form, legend='New Note')
 
@@ -43,7 +42,7 @@ def edit_note(note_id):
     note.content = form.content.data
     db.session.commit()
     flash('Your note has been edited', 'success')
-    return redirect(url_for('note', note_id=note.id))
+    return redirect(url_for('notes.note', note_id=note.id))
   elif request.method == 'GET':
     form.title.data = note.title
     form.content.data = note.content
@@ -52,3 +51,10 @@ def edit_note(note_id):
 @notes.route("/note/<int:note_id>/delete", methods=['POST'])
 @login_required
 def delete_note(note_id):
+  note = Note.query.get_or_404(note_id)
+  if note.author != current_user:
+    abort(403)
+  db.session.delete(note)
+  db.session.commit()
+  flash('Your note has been deleted', 'success')
+  return redirect(url_for('main.home'))
