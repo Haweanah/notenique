@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-from notenique import db, login_manager, app
+from notenique import db, login_manager
 from flask_login import UserMixin
 
 
