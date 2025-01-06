@@ -1,4 +1,4 @@
-#Notenique - Notes Management Application
+# Notenique - Notes Management Application
 
 
 Notenique is a user-friendly, feature-rich notes management application designed to help users create, organize, and manage their notes effectively. Whether you're a student, professional, or hobbyist, Notenique provides an intuitive interface to keep your notes secure and accessible.
