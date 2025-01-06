@@ -3,23 +3,22 @@
 
 Notenique is a user-friendly, feature-rich notes management application designed to help users create, organize, and manage their notes effectively. Whether you're a student, professional, or hobbyist, Notenique provides an intuitive interface to keep your notes secure and accessible.
 
-Features
-User Authentication: Secure login and registration system.
-Personalized Notes: Users can create, edit, and delete notes.
-Note Display: List of notes with titles and excerpts for easy browsing.
-Responsive Design: Fully responsive and mobile-friendly interface, powered by Bootstrap 5.
-Search Notes: Quickly search and find your notes using the built-in search functionality.
-Profile Management: Users can upload and update their profile images.
-Secure Storage: Notes are stored securely and are accessible at any time.
-Technologies Used
-Frontend: HTML, CSS (Bootstrap 5)
-Backend: Python (Flask)
-Database: SQLite
-Authentication: Flask-Login
-ORM: SQLAlchemy
-Form Handling: WTForms
-Installation
-Prerequisites
+## Features
+- User Authentication: Secure login and registration system.
+- Personalized Notes: Users can create, edit, and delete notes.
+- Note Display: List of notes with titles and excerpts for easy browsing.
+- Responsive Design: Fully responsive and mobile-friendly interface, powered by       Bootstrap 5.
+- Profile Management: Users can upload and update their profile images.
+-- Secure Storage: Notes are stored securely and are accessible at any time.
+## Technologies Used
+- Frontend: HTML, CSS (Bootstrap 5)
+- Backend: Python (Flask)
+- Database: SQLite
+- Authentication: Flask-Login
+- ORM: SQLAlchemy
+- Form Handling: WTForms
+## Installation
+### Prerequisites
 Ensure you have Python 3.x and pip installed. You can download Python from the official Python website.
 
 Steps to Install
