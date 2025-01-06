@@ -23,7 +23,7 @@ Ensure you have Python 3.x and pip installed. You can download Python from the o
 
 ### Steps to Install
 - Clone the repository:
-git clone https://github.com/your-username/notenique.git
+git clone https://github.com/haweanah/notenique.git
 cd notenique
 - Create a virtual environment:
 -- bash
