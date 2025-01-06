@@ -22,8 +22,10 @@ def create_app(config_class=Config):
     from notenique.users.routes import users
     from notenique.notes.routes import notes
     from notenique.main.routes import main
+    from notenique.errors.handlers import errors
     app.register_blueprint(users)
     app.register_blueprint(notes)
     app.register_blueprint(main)
+    app.register_blueprint(errors)
 
     return app

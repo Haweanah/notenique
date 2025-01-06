@@ -41,6 +41,9 @@ body {
     -ms-border-radius: 3px;
     -o-border-radius: 3px;
 }
+  a {
+    text-decoration: none;
+  }
   
   .article-title {
     color: #444444;
@@ -95,4 +98,5 @@ body {
     display: block;
     margin-left: 15px;
   }
+  
   

@@ -1,10 +1,12 @@
-from flask import render_template, url_for, flash, redirect, request, abort, Blueprint
-from flask_login import  current_user, login_required
+from flask import render_template, url_for, flash, redirect, abort,request, Blueprint
+from flask_login import current_user, login_required
 from notenique import db
 from notenique.models import Note
 from notenique.notes.forms import NoteForm
 
 notes = Blueprint('notes', __name__)
+
+
 
 @notes.route("/post/new", methods=['GET', 'POST'])
 @login_required
@@ -12,6 +14,7 @@ def new_note():
     form = NoteForm()
     
     if form.validate_on_submit():
+        # Capture the HTML content from Quill editor
         content = form.content.data  # This is the content passed from the form (which will be Quill content)
 
         # Save the new note with the content (HTML)
@@ -41,7 +44,7 @@ def edit_note(note_id):
     note.content = form.content.data
     db.session.commit()
     flash('Your note has been edited', 'success')
-    return redirect(url_for('notes.note', note_id=note.id))
+    return redirect(url_for('note.note', note_id=note.id))
   elif request.method == 'GET':
     form.title.data = note.title
     form.content.data = note.content

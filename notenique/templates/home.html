@@ -2,7 +2,7 @@
 
 {% block content %}
     {% if current_user.is_authenticated %}
-        <!-- Profile Section -->
+        <!-- Logged-In Users Section -->
         <div class="d-flex align-items-center mt-5 mb-4">
             <div class="me-4">
                 <img src="{{ url_for('static', filename='photo/' + current_user.image_file) }}" class="rounded-circle" alt="Profile Picture" style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #ddd;">
@@ -18,11 +18,9 @@
             <h5 class="card-title text-primary">Your Notes</h5>
             <p class="text-muted">Here are your recent notes. You can manage and view them below:</p>
 
-            <!-- Display a message if there are no notes -->
             {% if notes.items|length == 0 %}
                 <p class="text-muted">You currently have no notes. Start creating some!</p>
             {% else %}
-                <!-- Display only logged-in user's notes -->
                 <div class="mt-4">
                     {% for note in notes.items %}
                         {% if note.author and note.author.id == current_user.id %}
@@ -52,7 +50,6 @@
                 </div>
             {% endif %}
 
-            <!-- Pagination for notes -->
             {% if notes.pages > 1 %}
                 <div class="text-center mt-4">
                     {% for page_num in notes.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
@@ -60,10 +57,7 @@
                             {% if notes.page == page_num %}
                                 <a class="btn btn-warning mb-2" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a>
                             {% else %}
-                                <!-- Only show pages with notes -->
-                                {% if notes.items %}
-                                    <a class="btn btn-outline-warning mb-2" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a>
-                                {% endif %}
+                                <a class="btn btn-outline-warning mb-2" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a>
                             {% endif %}
                         {% else %}
                             <span>.....</span>
@@ -74,46 +68,55 @@
         </div>
 
     {% else %}
-        <!-- Non-logged-in Users Section -->
-        <div class="text-center mt-5 mb-4" style="background: linear-gradient(135deg, #FFA07A, #FF7F50); padding: 40px; border-radius: 15px;">
-            <h2 class="text-light">Welcome to the Notes App!</h2>
-            <p class="text-light">Please log in to view and manage your personalized notes. Here's a preview of what you can do:</p>
+        <!-- Non-Logged-In Users Section -->
+        <div class="text-center mt-4 mb-5 p-5" style="background: linear-gradient(135deg, #ff7eb3, #ff758c); color: #fff; border-radius: 20px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);">
+            <h1>Welcome to Notenique</h1>
+            <p class="fs-5">Log in to unlock your personalized notes and explore powerful features designed for you!</p>
+            <div class="mt-4">
+                <a href="{{ url_for('users.login') }}" class="btn btn-light btn-lg me-3" style="color: #ff758c; font-weight: bold;">Log In</a>
+                <a href="{{ url_for('users.register') }}" class="btn btn-outline-light btn-lg" style="font-weight: bold; border-width: 2px;">Sign Up</a>
+            </div>
         </div>
 
-        <!-- Dummy Data for Non-logged-in Users -->
-        <div class="row mt-5">
+        <!-- Features Section for Non-Logged-In Users -->
+        <div class="row mt-5 justify-content-between">
             <div class="col-md-4">
-                <div class="card shadow-sm rounded-lg">
-                    <img class="card-img-top rounded-circle mx-auto mt-3" src="{{ url_for('static', filename='photo/default.jpg') }}" alt="dummy profile photo" style="width: 120px; height: 120px; object-fit: cover;">
-                    <div class="card-body text-center">
-                        <h5 class="card-title text-primary">John Doe</h5>
-                        <small class="text-muted">01-01-2025</small>
-                        <h3 class="mt-3">Sample Note Title</h3>
-                        <p class="text-dark" style="line-height: 1.6;">
-                            This is a sample note content. Please log in to see your own notes. It's quick and easy to manage all your personal notes here!
-                        </p>
+                <div class="card text-center shadow-lg border-0" style="background-color: #ffe7ed; border-radius: 15px;">
+                    <div class="card-body p-4">
+                        <i class="bi bi-pencil-square fs-1 text-danger"></i>
+                        <a href="{{ url_for('notes.new_note') }}"><h5 class="card-title mt-3 text-dark">Create Notes</h5></a>
+                        <p class="text-muted">Effortlessly create and organize your notes with an intuitive interface.</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card shadow-sm rounded-lg">
-                    <img class="card-img-top rounded-circle mx-auto mt-3" src="{{ url_for('static', filename='photo/default.jpg') }}" alt="dummy profile photo" style="width: 120px; height: 120px; object-fit: cover;">
-                    <div class="card-body text-center">
-                        <h5 class="card-title text-primary">Jane Smith</h5>
-                        <small class="text-muted">02-01-2025</small>
-                        <h3 class="mt-3">Another Sample Note</h3>
-                        <p class="text-dark" style="line-height: 1.6;">
-                            Here is another dummy note content for non-logged-in users. Please log in to access your own notes.
-                        </p>
+                <div class="card text-center shadow-lg border-0" style="background-color: #d3ebe7; border-radius: 15px;">
+                    <div class="card-body p-4">
+                        <i class="bi bi-pencil-square fs-1 text-danger"></i>
+                        <a href="{{ url_for('notes.new_note') }}"><h5 class="card-title mt-3 text-dark">Edit Notes</h5></a>
+                        <p class="text-muted">Feel free to edit or delete your notes anytime and personalize your content.</p>
                     </div>
                 </div>
             </div>
+           
+            <div class="col-md-4">
+                <div class="card text-center shadow-lg border-0" style="background-color: #f2ffe7; border-radius: 15px;">
+                    <div class="card-body p-4">
+                        <i class="bi bi-shield-check fs-1 text-success"></i>
+                        <h5 class="card-title mt-3 text-dark">Secure Storage</h5>
+                        <p class="text-muted">Your notes are safely stored and always accessible.</p>
+                    </div>
+                </div>
+            </div>
+            
         </div>
+        
 
-        <!-- Login & Sign Up Buttons -->
-        <div class="text-center mt-4">
-            <a href="{{ url_for('users.login') }}" class="btn btn-primary btn-lg">Login</a>
-            <a href="{{ url_for('users.register') }}" class="btn btn-outline-primary btn-lg">Sign Up</a>
+        <!-- CTA Section -->
+        <div class="text-center mt-5">
+            <h2 class="text-dark">Ready to Get Started?</h2>
+            <p class="text-muted">Join today and take control of your notes like never before!</p>
+            <a href="{{ url_for('users.register') }}" class="btn btn-primary btn-lg mt-3" style="padding: 10px 40px; border-radius: 50px;">Sign Up Now</a>
         </div>
     {% endif %}
 {% endblock content %}
