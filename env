@@ -1,0 +1,4 @@
+SECRET_KEY=aaa95e726010ac65ea9a882fa1e0bcd3
+SQLALCHEMY_DATABASE_URI=sqlite:///site.db
+DEBUG=True
+TESTING=False
