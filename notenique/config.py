@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 
 # Load environment variables from .env file (for local development)
-load_dotenv(dotenv_path="C:/Users/HP/Downloads/notenique/.env")
+load_dotenv()
 
 class Config:
     SECRET_KEY = os.getenv('SECRET_KEY', 'defaultsecretkey')
