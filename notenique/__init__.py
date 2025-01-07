@@ -30,6 +30,7 @@ def create_app(config_class=Config):
     bcrypt.init_app(app)
     login_manager.init_app(app)
 
+    # Initialize Migrate after db.init_app() has been called
     migrate.init_app(app, db)
     
     # Register Blueprints (Your routes for different parts of the app)
