@@ -3,3 +3,4 @@
 # Ignore the .gitignore file
 .gitignore
 .vercel
+venv
