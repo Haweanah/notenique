@@ -29,8 +29,8 @@ def create_app(config_class=Config):
     db.init_app(app)
     bcrypt.init_app(app)
     login_manager.init_app(app)
-    migrate.init_app(app, db)  # Initialize migration
-
+    
+    migrate = Migrate(app, db)
     # Register Blueprints (Your routes for different parts of the app)
     from notenique.users.routes import users
     from notenique.notes.routes import notes
