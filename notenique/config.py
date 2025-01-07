@@ -1,12 +1,12 @@
-from dotenv import load_dotenv
 import os
+from dotenv import load_dotenv
 
-# Specify the full path to the .env file (adjust the path accordingly)
+# Load environment variables from .env file (for local development)
 load_dotenv(dotenv_path="C:/Users/HP/Downloads/notenique/.env")
 
 class Config:
     SECRET_KEY = os.getenv('SECRET_KEY', 'defaultsecretkey')
-    SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI', 'sqlite:///C:/Users/HP/Downloads/notenique/site.db')
+    SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI')  # Load directly from the environment variable
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     DEBUG = os.getenv('DEBUG') == 'True'
     TESTING = os.getenv('TESTING') == 'True'
