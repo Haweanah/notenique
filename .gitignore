@@ -2,5 +2,4 @@
 .env
 # Ignore the .gitignore file
 .gitignore
-.vercel
 venv

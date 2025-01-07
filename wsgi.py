@@ -1,5 +1,5 @@
 import sys
-path = 'C:\Users\HP\Downloads\notenique'
+path = 'C:/Users/HP/Downloads/notenique'
 if path not in sys.path:
     sys.path.insert(0, path)
 

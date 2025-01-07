@@ -6,7 +6,7 @@ load_dotenv(dotenv_path="C:/Users/HP/Downloads/notenique/.env")
 
 class Config:
     SECRET_KEY = os.getenv('SECRET_KEY', 'defaultsecretkey')
-    SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI', r'sqlite:///C:/Users/HP/Downloads/notenique/site.db')
+    SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI', 'sqlite:///C:/Users/HP/Downloads/notenique/site.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     DEBUG = os.getenv('DEBUG') == 'True'
     TESTING = os.getenv('TESTING') == 'True'
