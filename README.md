@@ -10,13 +10,46 @@ Notenique is a user-friendly, feature-rich notes management application designed
 - Responsive Design: Fully responsive and mobile-friendly interface, powered by       Bootstrap 5.
 - Profile Management: Users can upload and update their profile images.
 -- Secure Storage: Notes are stored securely and are accessible at any time.
+
 ## Technologies Used
 - Frontend: HTML, CSS (Bootstrap 5)
 - Backend: Python (Flask)
-- Database: SQLite
+- Database: PostgreSQL (previously SQLite)
 - Authentication: Flask-Login
 - ORM: SQLAlchemy
 - Form Handling: WTForms
+
+## Switching from SQLite to PostgreSQL
+To switch from SQLite to PostgreSQL, follow these steps:
+1. Install PostgreSQL and create a database:
+   ```bash
+   sudo -u postgres psql
+   CREATE DATABASE notenique_db;
+
+2. Update config.py to point to PostgreSQL:
+python
+SQLALCHEMY_DATABASE_URI = 'postgresql://username:password@localhost/notenique_db'
+
+3. Install psycopg2 (PostgreSQL adapter for Python):
+pip install psycopg2
+
+4. Reinitialize the database:
+flask db init
+flask db migrate
+flask db upgrade
+
+Deployment on Render
+To deploy the application on Render:
+
+Create a new web service on Render.
+Connect your GitHub repository and select the branch you want to deploy.
+Set the environment variables, including FLASK_APP, FLASK_ENV, and the PostgreSQL database URL.
+Configure the build and start commands:
+Build command: pip install -r requirements.txt
+Start command: flask run
+Render will automatically detect the Flask application and deploy it. After deployment, you can access the app via the provided URL.
+
+
 ## Installation
 ### Prerequisites
 Ensure you have Python 3.x and pip installed. You can download Python from the official Python website.
@@ -47,8 +80,8 @@ flask db upgrade
 -- bash
 flask run
 - Open the app in your browser:
-
 http://127.0.0.1:5000/
+
 ## Usage
 ### Login/Signup:
 Users can sign up or log in to access their personalized notes.

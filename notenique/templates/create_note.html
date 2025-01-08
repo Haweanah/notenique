@@ -26,7 +26,7 @@
             {{ form.content.label(class="form-label", style="font-weight: 500; color: #2c3e50;") }}
             <div id="editor" class="form-control" style="height: 300px; border-radius: 8px;"></div>
             <!-- Hidden Field for Content -->
-            <textarea name="content" class="d-none"></textarea> <!-- This is the hidden field -->
+            <textarea name="content" class="d-none">{{ form.content.data|safe }}</textarea> <!-- This is the hidden field -->
         </div>
 
         <!-- Submit Button -->
@@ -67,6 +67,9 @@
         var content = quill.root.innerHTML;
         document.querySelector("textarea[name='content']").value = content;
     };
+
+    // If editing, load the existing content into the Quill editor
+    quill.root.innerHTML = `{{ form.content.data|safe }}`;
 </script>
 
 {% endblock content %}

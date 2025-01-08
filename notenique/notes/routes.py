@@ -35,20 +35,24 @@ def note(note_id):
 @notes.route("/note/<int:note_id>/edit", methods=['GET', 'POST'])
 @login_required
 def edit_note(note_id):
-  note = Note.query.get_or_404(note_id)
-  if note.author != current_user:
-    abort(403)
-  form = NoteForm()
-  if form.validate_on_submit():
-    note.title = form.title.data
-    note.content = form.content.data
-    db.session.commit()
-    flash('Your note has been edited', 'success')
-    return redirect(url_for('note.note', note_id=note.id))
-  elif request.method == 'GET':
-    form.title.data = note.title
-    form.content.data = note.content
-  return render_template('create_note.html', title='Edit Note', form=form, legend='Edit Note')
+    note = Note.query.get_or_404(note_id)
+    if note.author != current_user:
+        abort(403)
+    form = NoteForm()
+    if form.validate_on_submit():
+        note.title = form.title.data
+        note.content = form.content.data  # Make sure the content from the form is saved
+        print(f"Fetched content: {note.content}")
+        db.session.commit()
+        flash('Your note has been updated!', 'success')
+        return redirect(url_for('notes.note', note_id=note.id))
+    elif request.method == 'GET':
+        form.title.data = note.title
+        form.content.data = note.content  # Pre-fill content for editing
+        print(f"Form content data: {form.content.data}")
+        print(f"Form content data (before returning template): {form.content.data}")  # Debugging step
+
+    return render_template('create_note.html', title='Edit Note', form=form, legend='Edit Note')
 
 @notes.route("/note/<int:note_id>/delete", methods=['POST'])
 @login_required

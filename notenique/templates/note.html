@@ -1,8 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <article class="media content-section">
-        <img class="rounded-circle article-img" src="{{ url_for('static', filename='photo/' + note.author.image_file) }}" alt="profile photo">
+    <article class="media content-section d-flex">
         <div class="media-body">
             <div class="article-metadata">
                 <a class="mr-2" href="#">{{ note.author.username }}</a>
@@ -17,7 +16,7 @@
                 {% endif %}
             </div>
             <h2 class="article-title">{{ note.title }}</h2>
-            <p class="article-content">{{ note.content  | safe}}</p>
+            <p class="article-content">{{ note.content | safe }}</p>
         </div>
     </article>
 
@@ -30,11 +29,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-footer">
-                    <!-- Close button with a more refined design -->
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                         <i class="fas fa-times-circle"></i> Close
                     </button>
-                    <!-- Delete button with an updated design -->
                     <form action="{{ url_for('notes.delete_note', note_id=note.id) }}" method="POST">
                         <input class="btn btn-danger" type="submit" value="Delete">
                     </form>
