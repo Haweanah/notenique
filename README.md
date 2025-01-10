@@ -3,6 +3,8 @@
 
 Notenique is a user-friendly, feature-rich notes management application designed to help users create, organize, and manage their notes effectively. Whether you're a student, professional, or hobbyist, Notenique provides an intuitive interface to keep your notes secure and accessible.
 
+### [Visit the App](https://notenique.onrender.com/) 🚀
+
 ## Features
 - User Authentication: Secure login and registration system.
 - Personalized Notes: Users can create, edit, and delete notes.
@@ -92,6 +94,15 @@ Logged-in users can create new notes from the "Create Notes" page.
 Users can edit or delete notes they have created.
 ### Profile:
 Users can upload their profile image and view their personalized page.
+
+## Live Demo
+
+Experience the app live by clicking the link below:
+
+[Notenique Live](https://notenique.onrender.com/)
+
+
+
 ## Contributing
 We welcome contributions to make Notenique better! If you'd like to contribute, please follow these steps:
 
