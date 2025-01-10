@@ -24,9 +24,9 @@ Notenique is a user-friendly, feature-rich notes management application designed
 ## Switching from SQLite to PostgreSQL
 To switch from SQLite to PostgreSQL, follow these steps:
 1. Install PostgreSQL and create a database:
-   ```bash
+   bash
    sudo -u postgres psql
-   CREATE DATABASE notenique_db;
+   CREATE DATABASE notenique_db
 
 2. Update config.py to point to PostgreSQL:
 python
