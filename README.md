@@ -25,8 +25,8 @@ Notenique is a user-friendly, feature-rich notes management application designed
 To switch from SQLite to PostgreSQL, follow these steps:
 1. Install PostgreSQL and create a database:
    - bash
-   -- sudo -u postgres psql
-   -- CREATE DATABASE notenique_db
+      - sudo -u postgres psql
+      - CREATE DATABASE notenique_db
 
 2. Update config.py to point to PostgreSQL:
 python
@@ -65,21 +65,21 @@ cd notenique
 python3 -m venv venv
 Activate the virtual environment:
 
--- For Windows:
+- For Windows:
 venv\Scripts\activate
--- For Mac/Linux:
+--For Mac/Linux:
 source venv/bin/activate
 
 - Install the required dependencies:
--- bash
+- bash
 pip install -r requirements.txt
 - Set up the database:
--- bash
+- bash
 flask db init
 flask db migrate
 flask db upgrade
 - Run the application:
--- bash
+- bash
 flask run
 - Open the app in your browser:
 http://127.0.0.1:5000/
@@ -119,5 +119,8 @@ Flask: A micro web framework for Python.
 Bootstrap 5: A popular framework for responsive web design.
 SQLAlchemy: An ORM for database management in Python.
 Flask-Login: A Flask extension for user session management.
+
+### [Notenique](https://notenique.onrender.com/) 🚀
+
 ## Author: Hauwa, Abdulkadir
 @ahauwa48@yahoo.com
