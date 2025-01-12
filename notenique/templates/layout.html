@@ -61,6 +61,10 @@
       </nav>
     </header>
     <main role="main" class="container">
+      <button id="install-btn" class="btn btn-danger btn-sm mt-3" style="display: none;">
+        Install Notenique
+    </button>
+    
       <div class="row">
         <div class="col-md-8">
           {% with messages = get_flashed_messages(with_categories=true) %}
@@ -77,9 +81,6 @@
         </div>
         
       </div>
-      <button id="install-btn" class="btn btn-primary mt-3" style="display: none;">
-        Install Notenique
-      </button>
       
     </main>
 
