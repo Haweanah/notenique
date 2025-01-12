@@ -5,7 +5,9 @@
         <!-- Logged-In Users Section -->
         <div class="d-flex align-items-center mt-5 mb-4">
             <div class="me-4">
-                <img src="{{ url_for('static', filename='photo/' + current_user.image_file) }}" class="rounded-circle" alt="Profile Picture" style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #ddd;">
+                <!-- Display user profile picture or default if not available -->
+                <img src="{{ url_for('static', filename='photo/' + (current_user.image_file if current_user.image_file != 'default.jpg' else 'default.jpg')) }}" class="rounded-circle" alt="Profile Picture" style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #ddd;">
+
             </div>
             <div>
                 <h2 class="text-primary">Welcome Back, {{ current_user.username }}!</h2>
@@ -26,7 +28,11 @@
                         {% if note.author and note.author.id == current_user.id %}
                             <article class="mb-4 p-4 border rounded-lg shadow-sm bg-white">
                                 <div class="d-flex align-items-center mb-3">
-                                    <img class="rounded-circle" src="{{ url_for('static', filename='photo/' + note.author.image_file) }}" alt="profile photo" style="width: 60px; height: 60px; object-fit: cover; margin-right: 15px;">
+                                    <!-- Display note author's profile picture or default -->
+                                    <img class="rounded-circle" 
+                                         src="{{ url_for('static', filename='photo/' + (note.author.image_file if note.author.image_file else 'default_profile.jpg')) }}" 
+                                         alt="profile photo" 
+                                         style="width: 60px; height: 60px; object-fit: cover; margin-right: 15px;">
                                     <div>
                                         <h6 class="mb-1"><a href="#" class="text-primary">{{ note.author.username }}</a></h6>
                                         <small class="text-muted">{{ note.date_posted.strftime('%d-%m-%Y') }}</small>
@@ -111,6 +117,7 @@
             
         </div>
         
+
 
         <!-- CTA Section -->
         <div class="text-center mt-5">

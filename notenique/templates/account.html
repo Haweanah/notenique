@@ -5,7 +5,7 @@
     <!-- Profile Header -->
     <div class="d-flex align-items-center mb-4">
         <img class="rounded-circle me-3" 
-             src="{{ image_file }}" 
+             src="{{ url_for('static', filename='photo/' + (current_user.image_file if current_user.image_file != 'default.jpg' else 'default.jpg')) }}" 
              alt="Profile Photo" 
              style="width: 100px; height: 100px; object-fit: cover; border: 3px solid #6c757d;">
         <div>

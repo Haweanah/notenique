@@ -3,8 +3,8 @@ const assets = [
   "/",
   "/static/css/bootstrap.min.css",
   "/static/js/script.js",
-  "/static/icons/icon-192x192.png",
-  "/static/icons/icon-512x512.png"
+  "/static/icons/notenique_icon_192x192.png",
+  "/static/icons/notenique_icon_512x512.png"
 ];
 
 self.addEventListener("install", (event) => {
