@@ -2,8 +2,8 @@
 
 {% block content %}
 <div class="content-section mx-auto mt-5 p-5" 
-     style="max-width: 700px; background: linear-gradient(135deg, #f3e7ff, #dff9fb); border-radius: 15px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);">
-    <form method="POST" action="" enctype="multipart/form-data">
+     style="min-height: 100vh; max-width: 100%; background: linear-gradient(135deg, #f3e7ff, #dff9fb); border-radius: 15px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); display: flex; flex-direction: column; justify-content: center;">
+    <form method="POST" action="" enctype="multipart/form-data" style="flex-grow: 1;">
         {{ form.hidden_tag() }}
 
         <!-- Title Field -->
@@ -24,9 +24,9 @@
         <!-- Quill.js Rich Text Editor -->
         <div class="form-group mb-4">
             {{ form.content.label(class="form-label", style="font-weight: 500; color: #2c3e50;") }}
-            <div id="editor" class="form-control" style="height: 300px; border-radius: 8px;"></div>
+            <div id="editor" class="form-control" style="height: 70vh; border-radius: 8px; overflow-y: auto;"></div>
             <!-- Hidden Field for Content -->
-            <textarea name="content" class="d-none">{{ form.content.data|safe }}</textarea> <!-- This is the hidden field -->
+            <textarea name="content" class="d-none">{{ form.content.data|safe }}</textarea>
         </div>
 
         <!-- Submit Button -->
@@ -44,7 +44,7 @@
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
 <script>
-    // Initialize Quill editor
+    // Initializing Quill editor
     var quill = new Quill('#editor', {
         theme: 'snow',
         modules: {
