@@ -96,6 +96,7 @@ Users can edit or delete notes they have created.
 Users can upload their profile image and view their personalized page.
 
 ## Live Demo
+<video controls src="Media Player - 17 January 2025.mp4" title="Title"></video>
 
 Experience the app live by clicking the link below:
 
