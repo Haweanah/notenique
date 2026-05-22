@@ -6,8 +6,10 @@ load_dotenv()
 class Config:
     SECRET_KEY = os.getenv('SECRET_KEY', 'defaultsecretkey')
 
-    # FIX HERE 👇
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
+    SQLALCHEMY_DATABASE_URI = os.getenv(
+    'DATABASE_URL',
+    os.getenv('SQLALCHEMY_DATABASE_URI')
+)
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     DEBUG = os.getenv('DEBUG') == 'True'
