@@ -1,12 +1,14 @@
 import os
 from dotenv import load_dotenv
 
-# Load environment variables from .env file (for local development)
 load_dotenv()
 
 class Config:
     SECRET_KEY = os.getenv('SECRET_KEY', 'defaultsecretkey')
-    SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI')  # Load directly from the environment variable
+
+    # FIX HERE 👇
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
+
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     DEBUG = os.getenv('DEBUG') == 'True'
     TESTING = os.getenv('TESTING') == 'True'
