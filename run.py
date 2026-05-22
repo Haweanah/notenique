@@ -13,4 +13,4 @@ app = create_app()
 
 # Run the application (for development, use the Flask built-in server)
 if __name__ == '__main__':
-    app.run(debug=False)  # Set debug=False in production
+    app.run(debug=True)  # Set debug=False in production
